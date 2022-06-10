@@ -5,3 +5,11 @@
 nav {
   background-color: #662D75;
 }
+
+.light-orange-bg-custom{
+  background-color: #D96464;
+}
+
+.home-linear-gradient-custom{
+  background: linear-gradient(180.14deg, #672E76 4.62%, #EB816B 99.87%);
+}
