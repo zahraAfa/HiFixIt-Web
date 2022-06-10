@@ -22,7 +22,7 @@ const TechListTable = (props) => {
                       </a>
                       <a
                         href='#'
-                        className='ml-10 font-medium text-blue-600 dark:text-red-500 hover:underline'
+                        className='ml-10 font-medium text-red-600 dark:text-red-500 hover:underline'
                       >
                         Reject
                       </a>

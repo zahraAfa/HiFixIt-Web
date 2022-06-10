@@ -7,6 +7,7 @@ import HomePageHeader from './HomePageHeader';
 import { db } from '../FirebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
 import TechList from './TechList';
+import MenuBarAdmin from './MenuBarAdmin';
 
 function App() {
 
@@ -41,7 +42,13 @@ function App() {
             </>
           }
         ></Route>
-        <Route path='technicians/all' element={<TechList techs={techs} />}></Route>
+        <Route path='technicians/all' element={
+            // <MenuBarAdmin />
+          <div className='min-h-full'>
+            <MenuBarAdmin />
+            <TechList techs={techs} />
+          </div>
+          }></Route>
         <Route path='technicians/request'></Route>
       </Routes>
     </Router>
