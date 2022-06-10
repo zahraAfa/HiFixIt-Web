@@ -1,12 +1,12 @@
 import './App.css';
+import '../index.css';
 import React from 'react';
 import { Switch, Route } from "react-router-dom";
+import MenuBar from './MenuBar';
 
 function App() {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <MenuBar />
   );
 }
 
