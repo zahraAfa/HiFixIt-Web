@@ -5,6 +5,15 @@
 nav {
   background-color: #662D75;
 }
+.nav-bg-custom-purple {
+  background-color: #662D75;
+}
+.nav-bg-custom-purple-dark {
+  background-color: #3e1b4779;
+}
+.nav-bg-custom-purple-light {
+  background-color: #d9646487;
+}
 
 .light-orange-bg-custom{
   background-color: #D96464;

@@ -6,6 +6,7 @@ import MenuBar from './MenuBar';
 import HomePageHeader from './HomePageHeader';
 import { db } from '../FirebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
+import TechList from './TechList';
 
 function App() {
 
@@ -20,8 +21,10 @@ function App() {
 
     const getTechs = async () => {
       const data = await getDocs(techsCollectionRef);
-      console.log(data);
+      setTech(data.docs.map((doc)=>({...doc.data(), id: doc.id})));
     }
+
+    getTechs();
 
   },[])
 
@@ -31,14 +34,15 @@ function App() {
       <Routes>
         <Route
           path='/'
-          exact
-          element={<>
-          <MenuBar />
-          <HomePageHeader />
-          </>}
-        >
-          
-        </Route>
+          element={
+            <>
+              <MenuBar />
+              <HomePageHeader />
+            </>
+          }
+        ></Route>
+        <Route path='technicians/all' element={<TechList techs={techs} />}></Route>
+        <Route path='technicians/request'></Route>
       </Routes>
     </Router>
   );
