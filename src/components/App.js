@@ -1,16 +1,26 @@
 import './App.css';
 import '../index.css';
 import React from 'react';
-import { Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MenuBar from './MenuBar';
 import HomePageHeader from './HomePageHeader';
 
 function App() {
   return (
-    <div>
-      <MenuBar />
-      <HomePageHeader />
-    </div>
+    <Router>
+      <Routes>
+        <Route
+          path='/'
+          exact
+          element={<>
+          <MenuBar />
+          <HomePageHeader />
+          </>}
+        >
+          
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
