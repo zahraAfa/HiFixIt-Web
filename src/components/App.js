@@ -9,6 +9,8 @@ import { collection, getDocs } from 'firebase/firestore';
 import TechList from './TechList';
 import MenuBarAdmin from './MenuBarAdmin';
 import TechRequests from './TechRequests';
+import CustList from './CustList';
+import { async } from '@firebase/util';
 
 function App() {
 
@@ -16,8 +18,12 @@ function App() {
   // console.log(ref);
 
   const [techs, setTech] = useState([]);
+  const [custs, setCust] = useState([]);
+  const [bookings, setBooking] = useState([]);
 
   const techsCollectionRef = collection(db, 'Technician');
+  const custsCollectionRef = collection(db, 'Customer');
+  const booksCollectionRef = collection(db, 'Booking');
 
   useEffect (()=>{
 
@@ -26,7 +32,19 @@ function App() {
       setTech(data.docs.map((doc)=>({...doc.data(), id: doc.id})));
     }
 
+    const getCusts = async () => {
+      const data = await getDocs(custsCollectionRef);
+      setCust(data.docs.map((doc)=>({...doc.data(), id: doc.id})));
+    }
+
+    const getBooks = async () => {
+      const data = await getDocs(booksCollectionRef);
+      setBooking(data.docs.map((doc)=>({...doc.data(), id: doc.id})));
+    }
+
     getTechs();
+    getCusts();
+    getBooks();
 
   },[])
 
@@ -55,6 +73,12 @@ function App() {
           <TechRequests techs={techs} />
         </div>
         }></Route>
+        <Route path='customers/all' element={
+          <div className='min-h-full'>
+            <MenuBarAdmin nav={2} />
+            <CustList custs={custs}/>
+          </div>
+        } ></Route>
       </Routes>
     </Router>
   );
