@@ -6,9 +6,10 @@ import TechListTable from "./TechListTable";
 import { Link } from "react-router-dom";
 
 const navigation = [
-  { name: 'Technicians', href: '/technicians/all', current: true },
+  { name: 'Technicians', href: '/technicians/all', current: false },
   { name: 'Requests', href: '/technicians/requests', current: false },
   { name: 'Customers', href: '/customers/all', current: false },
+  { name: 'Bookings', href: '/bookings/all', current: false },
 ]
 
 function classNames(...classes) {

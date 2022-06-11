@@ -10,7 +10,7 @@ import TechList from './TechList';
 import MenuBarAdmin from './MenuBarAdmin';
 import TechRequests from './TechRequests';
 import CustList from './CustList';
-import { async } from '@firebase/util';
+import BookList from './BookList';
 
 function App() {
 
@@ -45,9 +45,9 @@ function App() {
     getTechs();
     getCusts();
     getBooks();
-
+    
   },[])
-
+  // },[bookings, custs, techs])
 
   return (
     <Router>
@@ -77,6 +77,12 @@ function App() {
           <div className='min-h-full'>
             <MenuBarAdmin nav={2} />
             <CustList custs={custs}/>
+          </div>
+        } ></Route>
+        <Route path='bookings/all' element={
+          <div className='min-h-full'>
+            <MenuBarAdmin nav={3} />
+            <BookList books={bookings} techs={techs} custs={custs} />
           </div>
         } ></Route>
       </Routes>
