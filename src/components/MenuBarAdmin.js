@@ -2,19 +2,20 @@ import React from "react";
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { LogoutIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
-import TechListTable from "./TechListTable";
+import TechListTable from "./TechListTable";    
+import { Link } from "react-router-dom";
 
 const navigation = [
-  { name: 'Technicians', href: '#', current: true },
-  { name: 'Requests', href: '#', current: false },
-  { name: 'Customers', href: '#', current: false },
+  { name: 'Technicians', href: '/technicians/all', current: true },
+  { name: 'Requests', href: '/technicians/requests', current: false },
+  { name: 'Customers', href: '/customers/all', current: false },
 ]
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function MenuBarAdmin() {
+export default function MenuBarAdmin(props) {
 
   return (
         <Disclosure as='nav' className='nav-bg-custom-purple'>
@@ -32,8 +33,11 @@ export default function MenuBarAdmin() {
                     </div> */}
                     <div className='hidden md:block'>
                       <div className='ml-10 flex items-baseline space-x-4'>
-                        {navigation.map((item) => (
-                          <a
+                        {navigation.map((item, index) => {
+                            if(index === props.nav){item.current=true;}
+                            else{item.current=false;}
+                        
+                          return(<a
                             key={item.name}
                             href={item.href}
                             className={classNames(
@@ -45,8 +49,8 @@ export default function MenuBarAdmin() {
                             aria-current={item.current ? "page" : undefined}
                           >
                             {item.name}
-                          </a>
-                        ))}
+                          </a>);
+                        })}
                       </div>
                     </div>
                   </div>
@@ -83,11 +87,14 @@ export default function MenuBarAdmin() {
 
               <Disclosure.Panel className='md:hidden'>
                 <div className='px-2 pt-2 pb-3 space-y-1 sm:px-3'>
-                  {navigation.map((item) => (
-                    <Disclosure.Button
+                  {navigation.map((item, index) => {
+                    if(index === props.nav){item.current=true;}
+                    else{item.current=false;}
+                    return (<Disclosure.Button
                       key={item.name}
                       as='a'
                       href={item.href}
+                      current={(index === props.nav)? item.current=true : item.current=false}
                       className={classNames(
                         item.current
                           ? "bg-purple-500 text-white"
@@ -97,8 +104,8 @@ export default function MenuBarAdmin() {
                       aria-current={item.current ? "page" : undefined}
                     >
                       {item.name}
-                    </Disclosure.Button>
-                  ))}
+                    </Disclosure.Button>);
+                  })}
                 </div>
                 <div className='pt-4 pb-3 border-t border-purple-400'>
                   <div className='flex items-center px-5'>

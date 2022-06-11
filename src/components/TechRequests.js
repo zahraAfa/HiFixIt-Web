@@ -1,11 +1,11 @@
 import React from "react";
-import TechListTable from "./TechListTable";
+import TechReqTable from "./TechReqTable";
 
-export default function TechList(props) {
+export default function TechRequests(props) {
 
-    const renderTechList = props.techs.map((tech) => {
+    const renderTechReq = props.techs.map((tech) => {
         return (
-          <TechListTable
+          <TechReqTable
             tech={tech}
             key={tech.id}
           />
@@ -16,7 +16,7 @@ export default function TechList(props) {
     <>
         <header className='bg-white shadow'>
           <div className='max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8'>
-            <h1 className='text-3xl font-bold text-gray-900'>Technician List</h1>
+            <h1 className='text-3xl font-bold text-gray-900'>Technician Requests</h1>
           </div>
         </header>
         <main>
@@ -38,10 +38,13 @@ export default function TechList(props) {
                     <th scope='col' className='px-6 py-3'>
                       Category
                     </th>
+                    <th scope='col' className='px-6 py-3'>
+                      <span className='sr-only'>Edit</span>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {renderTechList}
+                  {renderTechReq}
                 </tbody>
               </table>
             </div>
