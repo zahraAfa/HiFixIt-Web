@@ -22,10 +22,14 @@ export default function Login() {
         };
   }, [currUser, loading]);
 
-  function loginHandler (e){
+  async function loginHandler(e) {
     // e.preventDefault();
-    logInWithEmailAndPassword(email, password);
-    navigate("/technicians/all")
+    if(email == "hifixit-admin@gmail.com"){
+        await logInWithEmailAndPassword(email, password);
+    }else{
+        alert("Please signin as admin.")
+        navigate("/")
+    }
 }
 // console.log(currUser);
 
@@ -39,7 +43,7 @@ export default function Login() {
             </h2>
             
           </div>
-          <form className='mt-8 space-y-6' >
+          <form className='mt-8 space-y-6' action="/technicians/all">
             
             <div className='rounded-md shadow-sm -space-y-px'>
               <div>
