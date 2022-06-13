@@ -1,9 +1,8 @@
 import React from "react";
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
+import { Disclosure } from '@headlessui/react'
 import { LogoutIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
-import TechListTable from "./TechListTable";    
-import { Link } from "react-router-dom";
+import { logout } from "../FirebaseConfig";
+import { Link, useNavigate } from "react-router-dom";
 
 const navigation = [
   { name: 'Technicians', href: '/technicians/all', current: false },
@@ -17,6 +16,12 @@ function classNames(...classes) {
 }
 
 export default function MenuBarAdmin(props) {
+  const nav = useNavigate();
+
+  function logoutHandler(){
+    logout();
+    nav("/")
+  }
 
   return (
         <Disclosure as='nav' className='nav-bg-custom-purple'>
@@ -58,6 +63,7 @@ export default function MenuBarAdmin(props) {
                   <div className='hidden md:block'>
                     <div className='ml-4 flex items-center md:ml-6'>
                       <button
+                      onClick={()=>logoutHandler()}
                         type='button'
                         className='bg-purple-500 p-1 rounded-full text-white hover:bg-purple-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
                       >
@@ -111,10 +117,11 @@ export default function MenuBarAdmin(props) {
                 <div className='pt-4 pb-3 border-t border-purple-400'>
                   <div className='flex items-center px-5'>
                     <button
+                      onClick={() => logoutHandler()}
                       type='button'
                       className='ml-auto bg-purple-500 flex-shrink-0 p-1 rounded-full text-white hover:bg-purple-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'
                     >
-                      <span className='sr-only'>View notifications</span>
+                      <span className='sr-only'>Sign out</span>
                       <LogoutIcon className='h-6 w-6' aria-hidden='true' />
                     </button>
                   </div>

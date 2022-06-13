@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore, getfirestore } from 'firebase/firestore';
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged  } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDmHLpbeGG9NsvZlJQhXuo_Ut1lnX4iHmE",
@@ -14,7 +15,56 @@ const firebaseConfig = {
 };
 
 
+
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+const auth = getAuth(app);
+const db = getFirestore(app);
+// const googleProvider = new GoogleAuthProvider();
 
-export const db = getFirestore(app);
+const logInWithEmailAndPassword = async (email, password) => {
+  // try {
+  //   await signInWithEmailAndPassword(auth, email, password);
+  //   alert("signed in");
+  // } catch (err) {
+  //   console.error(err);
+  //   alert(err.message);
+  // }
+  signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
+};
+
+const logout = () => {
+  signOut(auth);
+};
+
+const getCurrUser = async () =>{
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      const uid = user.uid;
+      // ...
+    } else {
+      // User is signed out
+      // ...
+    }
+  });
+}
+
+
+export {
+  auth,
+  db,
+  logInWithEmailAndPassword,
+  logout,
+  getCurrUser
+};

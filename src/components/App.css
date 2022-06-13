@@ -3,22 +3,22 @@
 }
 
 nav {
-  background-color: #662D75;
+  background-color: #662D75!important;
 }
 .nav-bg-custom-purple {
-  background-color: #662D75;
+  background-color: #662D75!important;
 }
 .nav-bg-custom-purple-dark {
-  background-color: #3e1b4779;
+  background-color: #3e1b4779!important;
 }
 .nav-bg-custom-purple-light {
-  background-color: #d9646487;
+  background-color: #d9646487!important;
 }
 
 .light-orange-bg-custom{
-  background-color: #D96464;
+  background-color: #D96464!important;
 }
 
 .home-linear-gradient-custom{
-  background: linear-gradient(180.14deg, #672E76 4.62%, #EB816B 99.87%);
+  background: linear-gradient(180.14deg, #672E76 4.62%, #EB816B 99.87%)!important;
 }

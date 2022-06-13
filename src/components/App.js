@@ -11,6 +11,7 @@ import MenuBarAdmin from './MenuBarAdmin';
 import TechRequests from './TechRequests';
 import CustList from './CustList';
 import BookList from './BookList';
+import Login from './Login';
 
 function App() {
 
@@ -87,6 +88,12 @@ function App() {
           <div className='min-h-full'>
             <MenuBarAdmin nav={3} />
             <BookList books={bookings} techs={techs} custs={custs} />
+          </div>
+        } ></Route>
+        <Route path='admin-login' element={
+          <div className='min-h-full'>
+            <MenuBar />
+            <Login />
           </div>
         } ></Route>
       </Routes>
