@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TechReqTable from "./TechReqTable";
-import { updateDoc, doc, where, query, collection, firebase, getDocs, deleteDoc } from 'firebase/firestore';
+import { updateDoc, doc, where, query, collection, getDocs, deleteDoc } from 'firebase/firestore';
 import { db } from "../FirebaseConfig";
 
 export default function TechRequests(props) {
@@ -32,6 +32,7 @@ export default function TechRequests(props) {
         // console.log("delete docs");
         deleteDoc(techsDocRef);
       }
+      // window.location.reload();
     }; 
 
   const renderTechReq = techs.map((tech) => {
