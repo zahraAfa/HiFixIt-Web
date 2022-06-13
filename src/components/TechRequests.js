@@ -1,16 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TechReqTable from "./TechReqTable";
+import { updateDoc, doc, where, query, collection, firebase, getDocs, deleteDoc } from 'firebase/firestore';
+import { db } from "../FirebaseConfig";
 
 export default function TechRequests(props) {
 
-    const renderTechReq = props.techs.map((tech) => {
-        return (
-          <TechReqTable
-            tech={tech}
-            key={tech.id}
-          />
+  const [techStatus, setTechStatus] = useState('Off');
+  const [techs, setTechs] = useState([]);
+  
+  
+  useEffect(() => {
+    const getPendingTechs = async () => {
+      const techsCollectionRef = collection(db, "Technician");
+      const pendingTechQuery = query(
+        techsCollectionRef,
+        where("techStatus", "==", "Pending")
         );
-      });
+        const querySnapshot = await getDocs(pendingTechQuery);
+        setTechs(querySnapshot.docs.map((doc)=>({...doc.data(), id: doc.id})));
+      };
+      
+      getPendingTechs();
+    }, []);
+    
+    const updateTechStatus = (techId, btn) => {
+      const techsDocRef = doc(db, 'Technician', techId);
+      if(btn === "accept"){
+        setTechStatus('Off');
+        updateDoc(techsDocRef, {techStatus});
+      }else{
+        // console.log("delete docs");
+        deleteDoc(techsDocRef);
+      }
+    }; 
+
+  const renderTechReq = techs.map((tech) => {
+    return (
+      <TechReqTable tech={tech} key={tech.id} clickHandler={updateTechStatus} />
+    );
+  });
 
   return (
     <>

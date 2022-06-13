@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MenuBar from './MenuBar';
 import HomePageHeader from './HomePageHeader';
 import { db } from '../FirebaseConfig';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import TechList from './TechList';
 import MenuBarAdmin from './MenuBarAdmin';
 import TechRequests from './TechRequests';
@@ -28,7 +28,11 @@ function App() {
   useEffect (()=>{
 
     const getTechs = async () => {
-      const data = await getDocs(techsCollectionRef);
+      const TechQuery = query(
+        techsCollectionRef,
+        where("techStatus", "!=", "Pending")
+      );
+      const data = await getDocs(TechQuery);
       setTech(data.docs.map((doc)=>({...doc.data(), id: doc.id})));
     }
 
@@ -48,7 +52,7 @@ function App() {
     
   },[])
   // },[bookings, custs, techs])
-
+  
   return (
     <Router>
       <Routes>
