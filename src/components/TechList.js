@@ -51,5 +51,3 @@ export default function TechList(props) {
     </>
   );
 }
-
-// export default TechList;

@@ -1,26 +1,43 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Disclosure } from '@headlessui/react'
 import { LogoutIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import { logout } from "../FirebaseConfig";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 
 const navigation = [
-  { name: 'Technicians', href: '/technicians/all', current: false },
-  { name: 'Requests', href: '/technicians/requests', current: false },
-  { name: 'Customers', href: '/customers/all', current: false },
-  { name: 'Bookings', href: '/bookings/all', current: false },
+  { name: 'Technicians', nav: '/technicians/all', current: false },
+  { name: 'Requests', nav: '/technicians/requests', current: false },
+  { name: 'Customers', nav: '/customers/all', current: false },
+  { name: 'Bookings', nav: '/bookings/all', current: false },
 ]
 
 function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ')
 }
 
 export default function MenuBarAdmin(props) {
+  
   const nav = useNavigate();
+  const auth = getAuth();
+  const currUser = auth.currentUser;
+  const [user, loading, error] = useAuthState(auth);
+
+  useEffect(()=>{
+    if (currUser == null || user == null){
+      nav("/");
+    }
+  },[])
 
   function logoutHandler(){
+    console.log("Logout");
     logout();
-    nav("/")
+    
+    if(user == null){
+      nav("/");
+    }
   }
 
   return (
@@ -30,32 +47,30 @@ export default function MenuBarAdmin(props) {
               <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
                 <div className='flex items-center justify-between h-16'>
                   <div className='flex items-center'>
-                    {/* <div className='flex-shrink-0'>
-                      <img
-                        className='h-8 w-8'
-                        src='https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg'
-                        alt='Workflow'
-                      />
-                    </div> */}
                     <div className='hidden md:block'>
                       <div className='ml-10 flex items-baseline space-x-4'>
                         {navigation.map((item, index) => {
                             if(index === props.nav){item.current=true;}
                             else{item.current=false;}
                         
-                          return(<a
-                            key={item.name}
-                            href={item.href}
-                            className={classNames(
+                            return <NavLink to={item.nav} key={item.name} className={classNames(
                               item.current
                                 ? "bg-purple-500 text-white"
                                 : "text-gray-300 hover:bg-purple-400 hover:text-white",
                               "px-3 py-2 rounded-md text-sm font-medium"
-                            )}
-                            aria-current={item.current ? "page" : undefined}
-                          >
-                            {item.name}
-                          </a>);
+                            )} aria-current={item.current ? "page" : undefined} >{item.name}</NavLink>
+                          // return(<a
+                          //   key={item.name}
+                          //   className={classNames(
+                          //     item.current
+                          //       ? "bg-purple-500 text-white"
+                          //       : "text-gray-300 hover:bg-purple-400 hover:text-white",
+                          //     "px-3 py-2 rounded-md text-sm font-medium"
+                          //   )}
+                          //   aria-current={item.current ? "page" : undefined}
+                          // >
+                          //   {item.name}
+                          // </a>);
                         })}
                       </div>
                     </div>

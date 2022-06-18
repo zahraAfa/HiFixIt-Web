@@ -12,9 +12,14 @@ import TechRequests from './TechRequests';
 import CustList from './CustList';
 import BookList from './BookList';
 import Login from './Login';
+import { getAuth } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 function App() {
-
+  
+  const auth = getAuth();
+  const [user, loading, error] = useAuthState(auth);
+  const currUser = auth.currentUser;
   // const ref = firebaseConfig.firestore().collection("Technician");
   // console.log(ref);
 
@@ -51,8 +56,50 @@ function App() {
     getCusts();
     getBooks();
     
-  },[])
-  // },[bookings, custs, techs])
+  },[]);
+
+
+  if (currUser != null || user != null){
+    return (
+      <Router>
+        <Routes>
+        <Route
+          path='/'
+          element={
+            <>
+              <MenuBarAdmin nav={null} />
+              <HomePageHeader />
+            </>
+          }
+        ></Route>
+          <Route path='technicians/all' element={
+            <div className='min-h-full'>
+              <MenuBarAdmin nav={0} />
+              <TechList techs={techs}  />
+            </div>
+            }></Route>
+          <Route path='technicians/requests' element={
+            <div className='min-h-full'>
+            <MenuBarAdmin nav={1} />
+            <TechRequests techs={techs}  />
+          </div>
+          }></Route>
+          <Route path='customers/all' element={
+            <div className='min-h-full'>
+              <MenuBarAdmin nav={2} />
+              <CustList custs={custs}  />
+            </div>
+          } ></Route>
+          <Route path='bookings/all' element={
+            <div className='min-h-full'>
+              <MenuBarAdmin nav={3} />
+              <BookList books={bookings} techs={techs} custs={custs}  />
+            </div>
+          } ></Route>
+        </Routes>
+      </Router>
+    );
+  }
   
   return (
     <Router>
@@ -66,34 +113,16 @@ function App() {
             </>
           }
         ></Route>
-        <Route path='technicians/all' element={
-          <div className='min-h-full'>
-            <MenuBarAdmin nav={0} />
-            <TechList techs={techs} />
-          </div>
-          }></Route>
-        <Route path='technicians/requests' element={
-          <div className='min-h-full'>
-          <MenuBarAdmin nav={1} />
-          <TechRequests techs={techs} />
-        </div>
-        }></Route>
-        <Route path='customers/all' element={
-          <div className='min-h-full'>
-            <MenuBarAdmin nav={2} />
-            <CustList custs={custs}/>
-          </div>
-        } ></Route>
-        <Route path='bookings/all' element={
-          <div className='min-h-full'>
-            <MenuBarAdmin nav={3} />
-            <BookList books={bookings} techs={techs} custs={custs} />
-          </div>
-        } ></Route>
+        <Route path='*' exact={true} element={
+            <>
+              <MenuBar />
+              <HomePageHeader />
+            </>
+          } />
         <Route path='admin-login' element={
           <div className='min-h-full'>
             <MenuBar />
-            <Login />
+            <Login  />
           </div>
         } ></Route>
       </Routes>

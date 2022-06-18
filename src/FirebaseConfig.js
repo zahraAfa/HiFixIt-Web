@@ -20,21 +20,13 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
-// const googleProvider = new GoogleAuthProvider();
 
 const logInWithEmailAndPassword = async (email, password) => {
-  // try {
-  //   await signInWithEmailAndPassword(auth, email, password);
-  //   alert("signed in");
-  // } catch (err) {
-  //   console.error(err);
-  //   alert(err.message);
-  // }
+
   signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
-    // ...
   })
   .catch((error) => {
     const errorCode = error.code;
@@ -49,13 +41,10 @@ const logout = () => {
 const getCurrUser = async () =>{
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
       const uid = user.uid;
       // ...
     } else {
       // User is signed out
-      // ...
     }
   });
 }
