@@ -1,7 +1,7 @@
 import './App.css';
 import '../index.css';
 import React, {useState, useEffect} from 'react';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import MenuBar from './MenuBar';
 import HomePageHeader from './HomePageHeader';
 import { db } from '../FirebaseConfig';
@@ -20,8 +20,7 @@ function App() {
   const auth = getAuth();
   const [user, loading, error] = useAuthState(auth);
   const currUser = auth.currentUser;
-  // const ref = firebaseConfig.firestore().collection("Technician");
-  // console.log(ref);
+  
 
   const [techs, setTech] = useState([]);
   const [custs, setCust] = useState([]);
@@ -58,12 +57,18 @@ function App() {
     
   },[]);
 
+  // useEffect(()=>{
+  //   if (user){
+  //     navigate('/technicians/all');
+  //   }
+  // },[])
+
 
   if (currUser != null || user != null){
     return (
       <Router>
         <Routes>
-        <Route
+        {/* <Route
           path='/'
           element={
             <>
@@ -71,7 +76,7 @@ function App() {
               <HomePageHeader />
             </>
           }
-        ></Route>
+        ></Route> */}
           <Route path='technicians/all' element={
             <div className='min-h-full'>
               <MenuBarAdmin nav={0} />
@@ -96,6 +101,9 @@ function App() {
               <BookList books={bookings} techs={techs} custs={custs}  />
             </div>
           } ></Route>
+          <Route path='*' exact={true} element={
+            <Navigate to="/technicians/all" />
+          } />
         </Routes>
       </Router>
     );
@@ -114,10 +122,7 @@ function App() {
           }
         ></Route>
         <Route path='*' exact={true} element={
-            <>
-              <MenuBar />
-              <HomePageHeader />
-            </>
+            <Navigate to="/" />
           } />
         <Route path='admin-login' element={
           <div className='min-h-full'>
